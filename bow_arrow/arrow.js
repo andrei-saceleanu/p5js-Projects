@@ -13,16 +13,27 @@ class Arrow{
 		this.pos.add(this.v);
 	}
 
+	outofsight(){
+		if(this.pos.x>width||this.pos.y>height)
+			return true;
+		return false;
+	}
+
 	show(){
-		let t = createVector(mouseX,mouseY);
-		t.sub(this.pos);
-		t.setMag(this.len);
-		this.dir = t.copy();
-		stroke(255);
-		strokeWeight(4);
-		push();
-		translate(this.pos.x,this.pos.y);
-		line(0,0,t.x,t.y);
-		pop();
+		if(!this.moving){
+			let t = createVector(mouseX,mouseY);
+			t.sub(this.pos);
+			t.setMag(this.len);
+			this.dir = t.copy();
+			stroke(255);
+			strokeWeight(4);
+			line(this.pos.x,this.pos.y,this.pos.x+t.x,this.pos.y+t.y);
+		}else{
+			stroke(255);
+			strokeWeight(4);
+			line(this.pos.x,this.pos.y,this.pos.x+this.dir.x,this.pos.y+this.dir.y);
+			this.dir.y += 4;
+			this.dir.setMag(this.len);
+		}
 	}
 }
