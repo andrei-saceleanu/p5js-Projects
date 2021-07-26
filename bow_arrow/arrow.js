@@ -1,6 +1,6 @@
 class Arrow{
 	constructor(){
-		this.pos = createVector(0,height/2);
+		this.pos = createVector(0,cannon_pos);
 		this.len = 100;
 		this.v = createVector(0,0);
 		this.moving = false;
@@ -16,6 +16,21 @@ class Arrow{
 	outofsight(){
 		if(this.pos.x>width||this.pos.y>height)
 			return true;
+		return false;
+	}
+
+	hit(targets){
+		let x = this.pos.x+this.dir.x;
+		let y = this.pos.y+this.dir.y;
+		
+		for(let i=0;i<targets.length;i++){
+			let t=targets[i];
+			let d = dist(x,y,t.pos.x,t.pos.y);
+			if(d<t.r/2){
+				targets.splice(i,1);
+				return true;
+			}
+		}
 		return false;
 	}
 
